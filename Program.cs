@@ -74,7 +74,7 @@ namespace FileHandler
             {
                 Console.WriteLine($"Name Error: {ex.Message}");
             }
-            catch (InvalidAgeException ex) when (!((firstName + " " + lastName).Equals("niels olesen", StringComparison.OrdinalIgnoreCase) && !ageIsInt))
+            catch (InvalidAgeException ex) when (!((firstName + " " + lastName).Equals("niels olesen", StringComparison.OrdinalIgnoreCase)))
             {
                 Console.WriteLine($"Age Error: {ex.Message}");
             }
