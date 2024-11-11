@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace FileHandler.Exceptions
 {
-    public class InvalidEmailException(string message, Exception innerException) : Exception(message, innerException)
+    public class InvalidEmailException : Exception
     {
+        public InvalidEmailException(string message) : base(message)
+        {
+        }
+
+        public InvalidEmailException(string message, Exception inner) : base(message, inner)
+        {
+        }
     }
+
 }

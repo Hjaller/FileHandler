@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace FileHandler.Exceptions
 {
-    public class InvalidNameException(string message) : Exception(message)
+    public class InvalidNameException : Exception
     {
+        public InvalidNameException(string message) : base(message)
+        {
+        }
+
+        public InvalidNameException(string message, Exception inner) : base(message, inner)
+        {
+        }
     }
 }

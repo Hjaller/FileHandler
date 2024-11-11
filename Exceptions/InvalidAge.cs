@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace FileHandler.Exceptions
 {
-    public class InvalidAgeException(string message) : Exception(message)
+    public class InvalidAgeException : Exception
     {
-    }
+        public InvalidAgeException(string message) : base(message)
+        {
+        }
+
+        public InvalidAgeException(string message, Exception inner) : base(message, inner)
+        {
+        }
 }
