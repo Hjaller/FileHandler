@@ -8,26 +8,36 @@ namespace FileHandler
     {
         static void Main(string[] args)
         {
+            string firstName = "";
+            string lastName = "";
+            bool ageIsInt = false;
             try
             {
                 Console.Write("Indtast fornavn: ");
-                string firstName = Console.ReadLine();
+                firstName = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(firstName))
                 {
                     throw new InvalidNameException("Fornavnet må ikke være tomt.");
                 }
 
                 Console.Write("Indtast efternavn: ");
-                string lastName = Console.ReadLine();
+                lastName = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(lastName))
                 {
                     throw new InvalidNameException("Efternavnet må ikke være tomt.");
                 }
 
                 Console.Write("Indtast alder: ");
-                if (!int.TryParse(Console.ReadLine(), out int age) || age < 18 || age > 50)
+                string ageInput = Console.ReadLine();
+                ageIsInt = int.TryParse(ageInput, out int age);
+                if (!ageIsInt)
                 {
-                    throw new InvalidAgeException("Alder skal være et gyldigt heltal mellem 18 og 50.");
+                    throw new InvalidAgeException("Alder skal være et gyldigt heltal.");
+                }
+
+                if (!(firstName + " " + lastName).Equals("niels olesen", StringComparison.OrdinalIgnoreCase) && (age < 18 || age > 50))
+                {
+                    throw new InvalidAgeException("Alder skal være mellem 18 og 50.");
                 }
 
                 Console.Write("Indtast email: ");
@@ -64,7 +74,7 @@ namespace FileHandler
             {
                 Console.WriteLine($"Name Error: {ex.Message}");
             }
-            catch (InvalidAgeException ex)
+            catch (InvalidAgeException ex) when (!((firstName + " " + lastName).Equals("niels olesen", StringComparison.OrdinalIgnoreCase) && !ageIsInt))
             {
                 Console.WriteLine($"Age Error: {ex.Message}");
             }
@@ -82,7 +92,7 @@ namespace FileHandler
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine($"Unhandled Exception: {ex.ToString()}");
             }
             finally
             {
