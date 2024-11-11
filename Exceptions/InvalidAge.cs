@@ -15,4 +15,5 @@ namespace FileHandler.Exceptions
         public InvalidAgeException(string message, Exception inner) : base(message, inner)
         {
         }
+    }
 }
