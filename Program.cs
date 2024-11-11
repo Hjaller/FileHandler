@@ -27,7 +27,7 @@ namespace FileHandler
                 Console.Write("Indtast email: ");
                 string email = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(email) || !email.Contains("@") || !email.Contains(".")) {
-                    throw new InvalidEmailException("Email må ikke være tom.", new ArgumentNullException());
+                    throw new InvalidEmailException("Email må ikke være tom, og skal indeholde både '@' og '.' .", new ArgumentNullException());
                 }
                 string user = $"{firstName} {lastName}, {age}, {email}";
                 string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files", "Users.txt");
