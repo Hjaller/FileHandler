@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using FileHandler.Exceptions;
 
@@ -47,27 +48,17 @@ namespace FileHandler
                     throw new InvalidEmailException("Email må ikke være tom, og skal indeholde både '@' og '.' .", new ArgumentNullException());
                 }
 
-                string user = $"{firstName} {lastName}, {age}, {email}";
-                string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Files", "Users.txt");
+                var user = new RegisteredUser() { FirstName = firstName, LastName = lastName, Age = age, Email = email };
+                UserFileHandler.AddUserToFile(user);
 
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-                using (StreamWriter writer = new StreamWriter(filePath, true))
+                Console.WriteLine(user + " er blevet tilføjet til filen.");
+
+                var users = UserFileHandler.GetUsersFromFile();
+                Console.WriteLine(users.Count);
+                Console.WriteLine("Registrerede brugere:");
+                foreach (var registeredUser in users)
                 {
-                    writer.WriteLine(user);
-                }
-
-                // List users
-                if (!File.Exists(filePath))
-                    throw new FileLoadException("Users.txt filen eksisterer ikke.");
-
-                using (StreamReader reader = new StreamReader(filePath))
-                {
-                    string content = reader.ReadToEnd();
-                    if (string.IsNullOrWhiteSpace(content))
-                        throw new FileLoadException("Users.txt filen er tom eller beskadiget.");
-
-                    Console.WriteLine("Registrerede brugere:");
-                    Console.WriteLine(content);
+                    Console.WriteLine(registeredUser);
                 }
             }
             catch (InvalidNameException ex)
@@ -92,7 +83,7 @@ namespace FileHandler
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Unhandled Exception: {ex.ToString()}");
+                Console.WriteLine($"Unhandled Exception: {ex}");
             }
             finally
             {
